@@ -1,0 +1,30 @@
+﻿Problemas para ser resolvidos:
+
+
+- quando clicar em new / random-graph perguntar se quer salvar o grafo anterior [sim/não/cancelar]
+- corrigir o nome do arquivo quando tentar salvar com o nome "[nome].graph" pra evitar duplicidade
+	obs: se tentar salvar com [nome].graph, ele vai salvar como [nome].graph.graph
+- não permitir adicionar vértices sem nome
+- tratar evento do botão "cancelar" em remove-vertex
+- resolver má formação da janela de adicionar/remover aresta
+- tratar os botões de cancelar em BFS e BFS*
+ 	obs: quando se roda o algoritmo, algumas funções são desativadas, se clicar em cancelar na hora
+ 	de escolher a raiz	do BFS ou BFS*, ele desativa as funções pensando que está rodando o algoritmo
+- desativar funções de edição durante a execução de um algoritmo
+- quando clicar em finish-algorithm, interromper a Thread que trata o algoritmo e a de pintura
+- tratar o problema de conversão grafo simples / grafo direcionado
+- tratar problemas com peso nas arestas
+- programar os algoritmos: Prim e Dijkstra
+- tratar desenhos de autoloops e arestas múltiplas
+- adicionar Painel de botões
+- atualizar informações de action e info em StatusPanel
+- tratar eventos de teclado
+- ajeitar aparência do painel superior
+- colocar para que o usuario escolha a velocidade de execução do algoritmo
+
+(ainda opcional)
+
+- edição manual de fluxo
+- edição automática de fluxo máximo (algoritmo de Edmonds-Karp)
+- diferenciar funções salvar / salvar como / salvar sem perguntar
+- colocar passo-a-passo de um algoritmo

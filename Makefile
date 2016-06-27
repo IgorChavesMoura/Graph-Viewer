@@ -1,34 +1,24 @@
 JCC = javac
+JAVA = java
 JFLAGS = -g
+COL = -Xlint
 
-default: Main.class view/*.class model/*.class view/observer/*.class view/panelCenter/*.class view/panelEast/*.class view/panelSouth/*.class view/panelWest/*.class
+default: Main.class view/*.class model_control/*.class observer/*.class thread/*.class
 
 Main.class: Main.java
 	$(JCC) $(JFLAGS) Main.java
 
+model_control/*.class: model_control/*.java
+	$(JCC) $(JFLAGS) model_control/*.java
+
 view/*.class: view/*.java
 	$(JCC) $(JFLAGS) view/*.java
 
-view/observer/*.class: view/observer/*.java
-	$(JCC) $(JFLAGS) view/observer/*.java
+observer/*.class: observer/*.java
+	$(JCC) $(JFLAGS) observer/*.java
 
-view/panelCenter/*.class: view/panelCenter/*.java
-	$(JCC) $(JFLAGS) view/panelCenter/*.java
-
-view/panelEast/*.class: view/panelEast/*.java
-	$(JCC) $(JFLAGS) view/panelEast/*.java
-
-view/panelSouth/*.class: view/panelSouth/*.java
-	$(JCC) $(JFLAGS) view/panelSouth/*.java
-
-view/panelWest/*.class: view/panelWest/*.java
-	$(JCC) $(JFLAGS) view/panelWest/*.java
-
-#control/*.class: control/*.java
-#	$(JCC) $(JFLAGS) control/*.java
-
-model/*.class: model/*.java
-	$(JCC) $(JFLAGS) model/*.java
+thread/*.class: thread/*.java
+	$(JCC) $(JFLAGS) thread/*.java
 
 clean:
 	$(RM) *.class
