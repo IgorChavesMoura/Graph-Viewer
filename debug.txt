@@ -21,6 +21,7 @@
 - tratar eventos de teclado
 - ajeitar aparência do painel superior
 - colocar para que o usuario escolha a velocidade de execução do algoritmo
+- melhorar aparência do programa
 
 (ainda opcional)
 
