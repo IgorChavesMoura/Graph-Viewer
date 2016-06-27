@@ -25,6 +25,8 @@ public class Vertex implements Serializable
 
 	/** */
 	Vertex predecessor;
+	
+	boolean isInMST;
 
 	/** */
 	LinkedList<Vertex> Adj;
