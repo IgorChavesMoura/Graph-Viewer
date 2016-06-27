@@ -2,7 +2,7 @@
 
 
 - [RESOLVIDO] quando clicar em new / random-graph perguntar se quer salvar o grafo anterior [sim/não/cancelar]
-- corrigir o nome do arquivo quando tentar salvar com o nome "[nome].graph" pra evitar duplicidade
+- [RESOLVIDO] corrigir o nome do arquivo quando tentar salvar com o nome "[nome].graph" pra evitar duplicidade
 	obs: se tentar salvar com [nome].graph, ele vai salvar como [nome].graph.graph
 - não permitir adicionar vértices sem nome
 - tratar evento do botão "cancelar" em remove-vertex
