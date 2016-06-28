@@ -7,7 +7,7 @@
 - [RESOLVIDO] não permitir adicionar vértices sem nome
 - [RESOLVIDO] tratar evento do botão "cancelar" em remove-vertex
 - resolver má formação da janela de adicionar/remover aresta
-- tratar os botões de cancelar em BFS e BFS*
+- [RESOLVIDO] tratar os botões de cancelar em BFS e BFS*
  	obs: quando se roda o algoritmo, algumas funções são desativadas, se clicar em cancelar na hora
  	de escolher a raiz	do BFS ou BFS*, ele desativa as funções pensando que está rodando o algoritmo
 - desativar funções de edição durante a execução de um algoritmo
