@@ -12,7 +12,7 @@
  	de escolher a raiz	do BFS ou BFS*, ele desativa as funções pensando que está rodando o algoritmo
 - [RESOLVIDO] desativar funções de edição durante a execução de um algoritmo
 - quando clicar em finish-algorithm, interromper a Thread que trata o algoritmo e a de pintura
-- tratar o problema de conversão grafo simples / grafo direcionado
+- [RESOLVIDO] tratar o problema de conversão grafo simples / grafo direcionado
 - tratar problemas com peso nas arestas
 - programar os algoritmos: Prim e Dijkstra
 - tratar desenhos de autoloops e arestas múltiplas
