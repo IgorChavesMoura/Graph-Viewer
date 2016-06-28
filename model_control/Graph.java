@@ -3,6 +3,7 @@ package model_control;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.ListIterator;
+import java.util.PriorityQueue;
 
 import observer.*;
 import thread.*;
@@ -369,7 +370,35 @@ public class Graph implements Serializable{
 		System.out.println("Vertex "+u.name+" virou PRETO com tempo de finalização "+u.finalTime);
 
 	}
+	
+	public void initializeSingleSource(Vertex s){
+		for(Vertex v: V){
+			v.distance = Integer.MAX_VALUE; // representa infinito
+			v.predecessor = null;
+		}
+		s.distance = 0;
+	}
+	
+	public void relax(Vertex u, Vertex v){
+		if(v.distance > u.distance + u.getWeight(v)){
+			v.distance = u.distance + u.getWeight(v);
+			v.predecessor = u;
+		}
+	}
+ 
+	public void Dijkstra(Vertex s) {
+		initializeSingleSource(s);
+		PriorityQueue<Vertex> Q = new PriorityQueue<Vertex>(new DistanceComparator());
+		for(Vertex u: V) 
+			Q.add(u);
+		while(Q.size()!=0){
+			Vertex u = Q.poll();
+			for(Vertex v: u.Adj){
+				relax(u,v);
+			}
+		}
 
+	}
 	public void setDirection(boolean direct){
 		directed = direct;
 	}
