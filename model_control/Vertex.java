@@ -25,14 +25,15 @@ public class Vertex implements Serializable
 
 	/** */
 	Vertex predecessor;
-	
-	boolean isInMST;
 
 	/** */
 	LinkedList<Vertex> Adj;
 
 	/** */
 	Map<String, Integer> weight = new HashMap<>();
+
+	/** */
+	boolean isInMST;
 
 	/** */
 	public Vertex()

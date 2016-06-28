@@ -388,7 +388,7 @@ public class Graph implements Serializable{
  
 	public void Dijkstra(Vertex s) {
 		initializeSingleSource(s);
-		PriorityQueue<Vertex> Q = new PriorityQueue<Vertex>(new DistanceComparator());
+		PriorityQueue<Vertex> Q = new PriorityQueue<Vertex>(0, new DistanceComparator());
 		for(Vertex u: V) 
 			Q.add(u);
 		while(Q.size()!=0){
@@ -399,6 +399,42 @@ public class Graph implements Serializable{
 		}
 
 	}
+
+	public void Prim(Vertex r)
+	{
+		for(Vertex u : V)
+		{
+			u.distance = Integer.MAX_VALUE;
+			u.isInMST = false;
+		}
+			
+		r.distance = 0;
+		r.predecessor = null;
+		
+		PriorityQueue<Vertex> Q = new PriorityQueue<Vertex>(0, new DistanceComparator());
+		
+		for ( Vertex u : V)
+			Q.add(u);
+		
+		Vertex u;
+		int d;
+				
+		while ( Q.size() != 0)
+		{
+			u = Q.poll();
+			u.isInMST = true;
+			
+			for (Vertex v : u.Adj)
+			{				
+				if ( !v.isInMST && u.getWeight(v)<v.distance )
+				{
+					v.distance = u.getWeight(v);
+					v.predecessor = u;
+				}
+			}
+		}
+	}
+	
 	public void setDirection(boolean direct){
 		directed = direct;
 	}
