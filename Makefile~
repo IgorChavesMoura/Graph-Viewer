@@ -9,7 +9,7 @@ Main.class: Main.java
 	$(JCC) $(JFLAGS) Main.java
 
 model_control/*.class: model_control/*.java
-	$(JCC) $(JFLAGS) model_control/*.java
+	$(JCC) $(JFLAGS) model_control/*.java $(COL)
 
 view/*.class: view/*.java
 	$(JCC) $(JFLAGS) view/*.java
