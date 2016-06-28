@@ -17,7 +17,7 @@
 - programar os algoritmos: Prim e Dijkstra
 - tratar desenhos de autoloops e arestas múltiplas
 - adicionar Painel de botões
-- atualizar informações de action e info em StatusPanel
+- [RESOLVIDO] atualizar informações de action e info em StatusPanel
 - tratar eventos de teclado
 - ajeitar aparência do painel superior
 - colocar para que o usuario escolha a velocidade de execução do algoritmo
