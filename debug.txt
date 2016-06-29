@@ -13,15 +13,15 @@
 - [RESOLVIDO] desativar funções de edição durante a execução de um algoritmo
 - quando clicar em finish-algorithm, interromper a Thread que trata o algoritmo e a de pintura
 - [RESOLVIDO] tratar o problema de conversão grafo simples / grafo direcionado
-- tratar problemas com peso nas arestas
-- programar os algoritmos: Prim e Dijkstra
+- [RESOLVIDO] tratar problemas com peso nas arestas
+- [RESOLVIDO] programar os algoritmos: Prim e Dijkstra
 - tratar desenhos de autoloops e arestas múltiplas
 - adicionar Painel de botões
 - [RESOLVIDO] atualizar informações de action e info em StatusPanel
 - tratar eventos de teclado
 - ajeitar aparência do painel superior
 - colocar para que o usuario escolha a velocidade de execução do algoritmo
-- melhorar aparência do programa
+- [RESOLVIDO] melhorar aparência do programa
 
 (ainda opcional)
 
