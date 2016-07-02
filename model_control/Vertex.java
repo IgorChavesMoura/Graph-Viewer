@@ -14,8 +14,14 @@ public class Vertex implements Serializable
 	/** */
 	int finalTime;
 
+	boolean isInMST;
+        boolean isParallel;
+
 	/** */
 	int distance;
+
+	/** */
+	int in = 0, out = 0;
 
 	/** Attribute that means the vertex's color. 0 for WHITE, 1 for GRAY and 2 for BLACK. */
 	int color;
@@ -30,10 +36,30 @@ public class Vertex implements Serializable
 	LinkedList<Vertex> Adj;
 
 	/** */
-	Map<String, Integer> weight = new HashMap<>();
+	Map<String, Integer> weight = new HashMap<String, Integer>();
+        Map<String, Integer> flow = new HashMap<>();
 
+	public void putFlow(Vertex u, int w){
+		flow.put(u.getName(), w);
+	}
+	public int getFlow(Vertex u){
+		return flow.get(u.getName());
+	}        
+        
 	/** */
-	boolean isInMST;
+	Map<String, Boolean> parallel = new HashMap<String, Boolean>();
+
+	public boolean getParallel(){
+            return isParallel;
+	}
+
+	public void setParallel(boolean b){
+            isParallel = b;
+	}
+        
+        public void setName(String name){
+            this.name = name;
+        }
 
 	/** */
 	public Vertex()
@@ -41,12 +67,14 @@ public class Vertex implements Serializable
 		Adj = new LinkedList<Vertex>();
 	}
 
+
+
 	public void putWeight(Vertex u, int w){
 		weight.put(u.getName(), w);
 	}
 
 	public int getWeight(Vertex u){
-		return weight.get(u);
+		return weight.get(u.getName());
 	}
 
 	/** */
@@ -73,6 +101,27 @@ public class Vertex implements Serializable
 
 	public int getDistance(){
 		return distance;
+	}
+
+	public void setIn(int x){
+		in = x;
+	}
+
+	public void setOut(int x){
+		out = x;
+	}
+
+	public int getIn(){
+            int n = 0;
+            for(Vertex x : Graph.getUnit().getV()){
+                if(x.getAdj().contains(Graph.getUnit().getVertex(getName())))
+                    n++;
+            }
+            return n;
+	}
+
+	public int getOut(){
+            return Adj.size();
 	}
 
 	// DEBUG

@@ -10,7 +10,13 @@ public class DistanceComparator implements Comparator<Vertex> {
 			Integer d1 = v1.distance;
 			Integer d2 = v2.distance;
 
-			return compareTo(d1, d2);
+			System.out.println("(" + v1 + ", " + v2 + ")");
+
+			if(d1 < d2)
+				return -1;
+			if(d1 > d2)
+				return 1;
+			return 0;
 		}
 		else return 0;
 	}

@@ -8,15 +8,22 @@ import java.io.*;
 
 public class OpenSave implements Serializable{
 
+    private OpenSave(){}
+    
 	public static void saveGraph(File f){
-		File f1 = new File(f.getParent(), f.getName() + ".graph");
+		File f1 = null;
+		if(!f.getName().contains(".graph")){
+			f1 = new File(f.getParent(), f.getName() + ".graph");
+		} else{
+			f1 = new File(f.getParent(), f.getName());
+		}// if-else
 		try{
 			FileOutputStream fout = new FileOutputStream(f1);
 			ObjectOutputStream oos = new ObjectOutputStream(fout);
-			oos.writeObject(Graph.getUnit());
+			oos.writeObject(GraphFile.getUnit());
 			oos.close();
 		} catch(Exception ex){
-			ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Error while saving file");
 		}
 
 	}
@@ -25,26 +32,30 @@ public class OpenSave implements Serializable{
 		 try{
 		 	FileInputStream fin = new FileInputStream(f);
 			ObjectInputStream ois = new ObjectInputStream(fin);
-
-			Graph.setUnit((Graph)ois.readObject());
+                        
+                        GraphFile.setUnit((GraphFile)ois.readObject());
+			//Graph.setUnit((Graph)ois.readObject());
+                        GraphFile.getUnit().load();
 		 	ois.close();
 		 } catch (Exception ex){
-		 	JOptionPane.showMessageDialog(null, "File not Found");
-		 	System.out.println(ex);
+                    JOptionPane.showMessageDialog(null, "Error while loading file");
 		 }
 	}
-
+/*
 	public static void saveGraphMap(File f){
-		String path = f.getAbsolutePath() + ".graphmap";
-		System.out.println(path);
+		String path = f.getAbsolutePath();
+		if(!path.contains(".graph")){
+			path += ".graphmap";
+		} else{
+			path += "map";
+		}// if-else
 		try{
 			FileOutputStream fout = new FileOutputStream(path);
 			ObjectOutputStream oos = new ObjectOutputStream(fout);
 			oos.writeObject(GraphMap.getUnit());
 			oos.close();
 		} catch(Exception ex){
-			System.out.println("Caiu uma exception em saveGraphMap");
-			System.out.println(ex);
+                        JOptionPane.showMessageDialog(null, "Error while saving file");
 		}
 	}
 
@@ -59,8 +70,8 @@ public class OpenSave implements Serializable{
 			GraphMap.setUnit((GraphMap)ois.readObject());
 		 	ois.close();
 		 } catch (Exception ex){
-		 	JOptionPane.showMessageDialog(null, "File not Found");
-		 	System.out.println(ex);
+		 	JOptionPane.showMessageDialog(null, "Error while loading file");
 		 }
 	}
+*/
 }

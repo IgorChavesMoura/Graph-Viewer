@@ -10,54 +10,89 @@ import java.util.*;
 
 public class SelectionHandler extends MouseAdapter{
 
-	private boolean isSelected = false;
+	private boolean isSelected = false, isSelectedByClick;
 	private Panel pan = Panel.getUnit();
-	private Vertex u = null;
+	private Vertex buffer = null;
+	private int clicksCount;
 
+        public Vertex getBuffer(){
+            return buffer;
+        }
+        
+        @Override
 	public void mouseMoved(MouseEvent e){
 		StatusPanel.getUnit().setCursor("[" + e.getX() + "," + e.getY() + "]");
 	}
+        
+        public boolean isSelectedByClick(){
+            return isSelectedByClick;
+        }
 
+        @Override
 	public void mouseClicked(MouseEvent e){
-		GraphMap g = GraphMap.getUnit();
-		Vertex x = g.isOn(e.getX(), e.getY());
-		if(!GraphMap.getUnit().isAlgorithmRunning()){
-			resetSelection();
-			if(x != null)
-				g.put(x, 2);
-		}
-		pan.repaint();
+            GraphMap g = GraphMap.getUnit();
+            buffer = g.isOn(e.getX(), e.getY());
+            String buf = ActionKeyboard.getUnit().getMultiSelectionBuffer();
+            if(!GraphMap.getUnit().isAlgorithmRunning()){
+                    resetSelection();
+                    if(buffer != null){
+                        g.put(buffer, 2);
+                        
+                        clicksCount = e.getClickCount();
+                        if(clicksCount == 2)
+                            new FrameVertex();
+                    } else {
+                        isSelectedByClick = false;
+                    }// if-else
+            }// if
+            bufferInfo();
+            pan.repaint();
+	}
+
+	public void bufferInfo(){
+		if(buffer != null){
+			StatusPanel.getUnit().setInfo("[" + buffer + "]");
+		} else{
+			StatusPanel.getUnit().setInfo("info");
+		}// if-else
 	}
 
 	public void resetSelection(){
-		GraphMap g = GraphMap.getUnit();
-		Map<String, Integer> map = g.getMapSelection();
-		Set<String> set = map.keySet();
-		for(String x : set)
-			g.put(Graph.getUnit().getVertex(x), 1);
+            GraphMap g = GraphMap.getUnit();
+            Map<String, Integer> map = g.getMapSelection();
+            Set<String> set = map.keySet();
+            for(String x : set)
+                    g.put(Graph.getUnit().getVertex(x), 1);
 	}
 
+        @Override
 	public void mouseDragged(MouseEvent e){
-		GraphMap g = GraphMap.getUnit();
-		if(!GraphMap.getUnit().isAlgorithmRunning())
-			resetSelection();
-		if(!e.isAltDown()){
-			if(!isSelected){
-				u = g.isOn(e.getX(), e.getY());
-				isSelected = true;
-			}
-			if(u != null){
-				if(!GraphMap.getUnit().isAlgorithmRunning())
-					g.put(u, 2);
-				g.setXY(u, e.getX() - Panel.SIZE/2, e.getY() - Panel.SIZE/2);
-			}// if
-			pan.repaint();
-		}
+            GraphMap g = GraphMap.getUnit();
+            //MultiSelection mul = MultiSelection.getUnit();
+            if(!GraphMap.getUnit().isAlgorithmRunning()){ // && mul.multiEmpty()){
+                resetSelection();
+            }
+            if(!e.isAltDown()){
+                if(!isSelected){
+                    buffer = g.isOn(e.getX(), e.getY());
+                    isSelected = true;
+                }
+                bufferInfo();
+                if(buffer != null){
+                    if(!GraphMap.getUnit().isAlgorithmRunning()){
+                        //MultiSelection.getUnit().substituteOnBox(e);
+                        g.put(buffer, 2);
+                    }// if
+                    g.setXY(buffer, e.getX() - Panel.SIZE/2, e.getY() - Panel.SIZE/2);
+                }// if
+                pan.repaint();
+            }
 	}
 
+        @Override
 	public void mouseReleased(MouseEvent e){
 		isSelected = false;
-		u = null;
+		buffer = null;
 	}
 
 	// Singleton

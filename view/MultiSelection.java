@@ -20,65 +20,151 @@ public class MultiSelection extends MouseAdapter{
 	private boolean isMoving = false;
 	private Ponto buffer, newCenter, vertex;
 	private Map<String, Ponto> map;
+	private boolean multi, isDragging;
+
+	private ArrayList<Vertex> multiBox = new ArrayList<Vertex>();
+
+	public boolean multiEmpty(){
+		return multiBox.isEmpty();
+	}
+        
+        public void addBox(Vertex u){
+            multiBox.add(u);
+            System.out.println(multiBox);
+        }
+
+	public ArrayList<Vertex> getMultiBox(){
+		return multiBox;
+	}
+        
+        public void clearBox(){
+            multiBox.clear();
+        }
+
+	public boolean getMulti(){
+		return multi;
+	}
+
+	public void setMulti(boolean b){
+		multi = b;
+	}
 
 	public void setMoviment(){
 
-		double x,y;
-		x = newCenter.getX() - buffer.getX();
-		y = newCenter.getY() - buffer.getY();
-		int a1, a2;
-		double x1 = (newCenter.getX() - buffer.getX())*(newCenter.getX() - buffer.getX()),
-				x2 = (newCenter.getY() - buffer.getY())*(newCenter.getY() - buffer.getY());
-		double slope = (double)(x/y),
-				alpha = Math.atan(slope),
-				radius = Math.sqrt(x1 + x2);
+            double x,y;
+            x = newCenter.getX() - buffer.getX();
+            y = newCenter.getY() - buffer.getY();
+            int a1, a2;
+            double x1 = (newCenter.getX() - buffer.getX())*(newCenter.getX() - buffer.getX()),
+                            x2 = (newCenter.getY() - buffer.getY())*(newCenter.getY() - buffer.getY());
+            double slope = (double)(x/y),
+                            alpha = Math.atan(slope),
+                            radius = Math.sqrt(x1 + x2);
 
-		if(y >= 0){
-			for(Vertex a : Graph.getUnit().getV()){
-				vertex = map.get(a.getName());
-				a1 = (int)(radius*Math.sin(alpha)) + vertex.getX();
-				a2 = (int)(radius*Math.cos(alpha)) + vertex.getY();
-				GraphMap.getUnit().put(a, new Ponto(a1, a2));
-			}
-		} else{
-			for(Vertex a : Graph.getUnit().getV()){
-				vertex = map.get(a.getName());
-				a1 = (int)-(radius*Math.sin(alpha)) + vertex.getX();
-				a2 = (int)-(radius*Math.cos(alpha)) + vertex.getY();
-				GraphMap.getUnit().put(a, new Ponto(a1, a2));
-			}
-		}
+            if(y >= 0){
+                for(Vertex a : multiBox){
+                    vertex = map.get(a.getName());
+                    a1 = (int)(radius*Math.sin(alpha)) + vertex.getX();
+                    a2 = (int)(radius*Math.cos(alpha)) + vertex.getY();
+                    GraphMap.getUnit().put(a, new Ponto(a1, a2));
+                }
+            } else{
+                for(Vertex a : multiBox){
+                    vertex = map.get(a.getName());
+                    a1 = (int)-(radius*Math.sin(alpha)) + vertex.getX();
+                    a2 = (int)-(radius*Math.cos(alpha)) + vertex.getY();
+                    GraphMap.getUnit().put(a, new Ponto(a1, a2));
+                }
+            }
 
 	}// setMoviment
+
+	public void resetSelection(){
+		GraphMap g = GraphMap.getUnit();
+		Map<String, Integer> map = g.getMapSelection();
+		Set<String> set = map.keySet();
+		for(String x : set)
+			g.put(Graph.getUnit().getVertex(x), 1);
+	}
+
+    public boolean isOnBox(Vertex u){
+        return multiBox.contains(u);
+    }
+        
+        @Override
+    public void mouseClicked(MouseEvent e){
+        String buf = ActionKeyboard.getUnit().getMultiSelectionBuffer();
+        GraphMap g = GraphMap.getUnit();
+        Vertex x = g.isOn(e.getX(), e.getY());
+
+        if(multi){
+            if(!g.isAlgorithmRunning()){
+                if(x != null){
+                    multiBox.add(x);
+                    g.put(x, 2);
+                }// if
+            }// if
+        } else if (!SelectionHandler.getUnit().isSelectedByClick()){
+            System.out.println("AINDA GUY AQUI");
+            multiBox.clear();
+        }// if-else
+        System.out.println(multiBox);
+        Panel.getUnit().repaint();
+    }
 
 	public boolean isMoving(){
 		return isMoving;
 	}// isMoving
 
-	public void mouseDragged(MouseEvent e){
-		if(!e.isMetaDown() && !e.isAltDown()){
-			if(GraphMap.getUnit().isOn(e.getX(), e.getY()) == null && !isMoving){
-				GraphMap.getUnit().setMultX(e.getX(), e.getY());
-				isMoving = true;
-			}// if
-			if(isMoving){
-				GraphMap.getUnit().setMultY(e.getX(), e.getY());
-			}
-		}// if
-/*
-		if(!Graph.getUnit().vertexEmpty()){
-			if(!isMoving){
-				isMoving = true;
-				map = GraphMap.getUnit().getMapCopy();
-				buffer = new Ponto(e.getX(), e.getY());
-			}// isMoving
-			newCenter = new Ponto(e.getX(), e.getY());
-			setMoviment();
-			Panel.getUnit().repaint();
-		}// isMetaDown
+    public void substituteOnBox(MouseEvent e){
+        GraphMap gm = GraphMap.getUnit();
+        Vertex x;
+        x = gm.isOn(e.getX(), e.getY());
+        if(x != null && !multiBox.contains(x) && multi)
+            multiBox.add(x);        
+    }
+        
+    public void mouseDragged(MouseEvent e){
+        String buf = ActionKeyboard.getUnit().getMultiSelectionBuffer();
+        GraphMap gm = GraphMap.getUnit();
+        ArrayList<Vertex> u;
+        Vertex x = gm.isOn(e.getX(), e.getY());
+        Ponto p, q;
+        if((buf == null || multiEmpty()) && x == null){
+            multiBox.clear();
+        }
+        if(!e.isMetaDown() && !e.isAltDown()){
+            
+            if(!isMoving){
+                gm.setMultX(e.getX(), e.getY());
+                isMoving = true;
+                map = gm.getMapCopy();
+                buffer = new Ponto(e.getX(), e.getY());
+            }// if
+            
+            newCenter = new Ponto(e.getX(), e.getY());
+            setMoviment();
+            Panel.getUnit().repaint();
+            
+            
+            substituteOnBox(e);
+/*          
+            if(isMoving){
+                gm.setMultY(e.getX(), e.getY());
+                p = gm.getMultX();
+                q = gm.getMultY();
+
+                u = gm.isOn(p.getX(), p.getY(), q.getX(), q.getY());
+                if(u != null){
+                        multiBox.addCollection(u);
+                        gm.put(u, 2);
+                }
+            }
 */
-		Panel.getUnit().repaint();
-	}// mouseDragged
+        }// if
+        Panel.getUnit().repaint();
+        System.out.println(multiBox);
+    }// mouseDragged
 
 	public void mouseReleased(MouseEvent e){
 		isMoving = false;

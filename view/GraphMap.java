@@ -25,6 +25,16 @@ public class GraphMap implements Serializable{
 	public static void setUnit(GraphMap gm){
 		unit = gm;
 	}
+        
+        public void substitute(String a, String b){
+            Ponto p = map.get(a);
+            map.remove(a);
+            map.put(b, p);
+            
+            Integer n = mapSelection.get(a);
+            mapSelection.remove(a);
+            mapSelection.put(b, n);
+        }
 
 	public void clear(){
 		map.clear();
@@ -101,8 +111,9 @@ public class GraphMap implements Serializable{
 
 	public Vertex isOn(int x, int y){
 		Set<String> key = map.keySet();
+		Ponto p;
 		for(String u : key){
-			Ponto p = map.get(u);
+			p = map.get(u);
 			if(x >= p.getX() && x <= p.getX() + Panel.SIZE && y >= p.getY() && y <= p.getY() + Panel.SIZE)
 				return Graph.getUnit().getVertex(u);
 		}// for

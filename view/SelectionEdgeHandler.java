@@ -37,7 +37,7 @@ public class SelectionEdgeHandler extends MouseAdapter{
 		Map<String, Ponto> map = g.getMap();
 		Ponto p;
 		Vertex loop = null;
-		if(e.isAltDown()){
+		if(e.isAltDown() && !GraphMap.getUnit().isAlgorithmRunning()){
 			if(!isDragging){
 				u = g.isOn(e.getX(), e.getY());
 				isDragging = true;
@@ -52,7 +52,6 @@ public class SelectionEdgeHandler extends MouseAdapter{
 				}else{
 					Panel.getUnit().setIsLoop(false);
 				}// if cursor is over the edge's tail
-
 			}// null
 		}// altDown
 		Panel.getUnit().repaint();
@@ -61,7 +60,7 @@ public class SelectionEdgeHandler extends MouseAdapter{
 	public void mouseReleased(MouseEvent e){
 		GraphMap g = GraphMap.getUnit();
 		Graph g2 = Graph.getUnit();
-		if(e.isAltDown()){
+		if(e.isAltDown() && !GraphMap.getUnit().isAlgorithmRunning()){
 			if( u != null){
 				v = g.isOn(e.getX(), e.getY());
 				if(v == null)
@@ -80,6 +79,9 @@ public class SelectionEdgeHandler extends MouseAdapter{
 			setEdgeBuffer(0,0,0,0);
 			u = null;
 			v = null;
+			//DEBUG
+			Graph gra = Graph.getUnit();
+			gra.showAll();
 		}// isAltDown
 	}// mouseReleased
 
