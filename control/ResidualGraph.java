@@ -3,20 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model_control;
+package control;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import model.Graph;
+import model.Vertex;
 import observer.ObservableGraphMap;
 import observer.ObserverGraphMapPaint;
-import view.GraphMap;
-import view.Panel;
-import view.StatusPanel;
+import model.GraphMap;
+import view.panel.Panel;
+import view.panel.PanelStatus;
 import thread.ThreadAlgorithm;
 import thread.ThreadPaint;
 
@@ -24,20 +25,13 @@ import thread.ThreadPaint;
  *
  * @author anderson
  */
-public class ResidualGraph extends Graph{
+public class ResidualGraph{
 
-    private static ResidualGraph unit;
     public static ResidualGraph getUnit(){
         if(unit == null)
-            unit = new ResidualGraph(true);
+            unit = new ResidualGraph();
         return unit;
     }
-    
-    ArrayList<Vertex> set = Graph.getUnit().getV();
-    
-    private boolean isAugmentedPath = true, isRunning = false;
-    private int minimumCapacity = Integer.MAX_VALUE;
-    Vertex end;
     
     public boolean isRunning(){
         return isRunning;
@@ -47,37 +41,32 @@ public class ResidualGraph extends Graph{
         isRunning = b;
     }
     
-    private ResidualGraph(boolean pdirected) {
-        super(pdirected);
+    private ResidualGraph() {
+
     }
 
     public void startFlow(){
         GraphMap.getUnit().setAlgorithmRunning(true);
         for(Vertex u : set){
-            for (Vertex v : u.Adj) {
+            for (Vertex v : u.getAdj()) {
                 u.putFlow(v,0);
             }
         }
     }
-    private ThreadAlgorithm thread;
     
-    private boolean interruption;
-    
-    @Override
     public void setInterruption(boolean b){
         interruption = b;
     }
     
     public void Edmonds_Karp(Vertex s, Vertex t) throws InterruptedException{
         startFlow();
-       
         end = t;
         Vertex temp, pred;
         int capac;
         isRunning = true;
         
         while(isAugmentedPath){
-            System.out.println("RUNNING");
+            minimumCapacity = Integer.MAX_VALUE;
             try{
                 thread = new ThreadAlgorithm(s, 6);
                 thread.getThread().join();
@@ -93,11 +82,12 @@ public class ResidualGraph extends Graph{
             while(temp.getPredecessor() != null){
                 pred = temp.getPredecessor();
                 capac = pred.getWeight(temp) - pred.getFlow(temp);
+                System.out.print(capac + " →");
                 if(capac < minimumCapacity)
                     minimumCapacity = capac;
                 temp = pred;
             }
-
+            System.out.println();
             temp = t;
             while(temp.getPredecessor() != null){
                 pred = temp.getPredecessor();
@@ -107,7 +97,17 @@ public class ResidualGraph extends Graph{
 
         }// while
         resetVertexPainting();
+        getMaximumFlowValue(s);
         Panel.getUnit().repaint();
+    }
+    
+    public void getMaximumFlowValue(Vertex u){
+        PanelStatus sp = PanelStatus.getUnit();
+        int flow = 0;
+        for(Vertex x : u.getAdj()){
+            flow += u.getFlow(x);
+        }
+        sp.setAction("Maximum Flow Value = " + flow);
     }
     
     public void resetVertexPainting(){
@@ -120,7 +120,6 @@ public class ResidualGraph extends Graph{
         }
     }
     
-    @Override
     public void handleThread(ObserverGraphMapPaint o, ObservableGraphMap ob, int color, Vertex u)
     throws InterruptedException{
         o.setColor(color);
@@ -132,7 +131,6 @@ public class ResidualGraph extends Graph{
         }
     }            
 
-    @Override
     public void BFS(Vertex s) throws InterruptedException{
         Vertex v, u;
         int i,j;
@@ -145,16 +143,16 @@ public class ResidualGraph extends Graph{
         GraphMap.getUnit().setAlgorithmRunning(true);
 
         for (Vertex x : set){
-            x.predecessor = null;
-            x.distance = -1; //-1 representa infinito
-            x.color= 0;
-            StatusPanel.getUnit().setAction("Color ["+ x +"] = white");
+            x.setPredecessor(null);
+            x.setDistance(-1); //-1 representa infinito
+            x.setColor(0);
+            PanelStatus.getUnit().setAction("Color ["+ x +"] = white");
             handleThread(ob, obs, 3, x);
         }
 
-        s.distance = 0;
-        s.color = 2;
-        StatusPanel.getUnit().setAction("Color ["+ s +"] = black");
+        s.setDistance(0);
+        s.setColor(2);
+        PanelStatus.getUnit().setAction("Color ["+ s +"] = black");
         handleThread(ob, obs, 5, s);
 
         F = new LinkedList<Vertex>();
@@ -166,27 +164,27 @@ public class ResidualGraph extends Graph{
         while(!F.isEmpty())
         {
             u = F.removeFirst();
-            iter = u.Adj.listIterator();
+            iter = u.getAdj().listIterator();
             while(iter.hasNext())
             {
                 v = (Vertex)iter.next();
                 capacity = u.getWeight(v) - u.getFlow(v);
-                if(v.color==0 && capacity > 0 && u.color != 0)
+                if(v.getColor()==0 && capacity > 0 && u.getColor() != 0)
                 {
-                    v.color = 2;
-                    v.predecessor = u;
-                    v.distance = u.distance + 1;
+                    v.setColor(2);
+                    v.setPredecessor(u);
+                    v.setDistance(u.getDistance() + 1);
                     F.add(v);
-                    StatusPanel.getUnit().setAction("Color ["+ v +"] = black; d[" + v + "] = " + v.distance);
+                    PanelStatus.getUnit().setAction("Color ["+ v +"] = black; d[" + v + "] = " + v.getDistance());
                     handleThread(ob, obs, 5, v);
                 }
             }
-            u.color = 2;
-            StatusPanel.getUnit().setAction("Color ["+ u +"] = black");
+            u.setColor(2);
+            PanelStatus.getUnit().setAction("Color ["+ u +"] = black");
             handleThread(ob, obs, 5, u);
         }
         
-        if(end != null && end.color == 0){
+        if(end != null && end.getColor() == 0){
             isAugmentedPath = false;
         } else{
             isAugmentedPath = true;            
@@ -198,4 +196,11 @@ public class ResidualGraph extends Graph{
         
     }
 
+    private static ResidualGraph unit;    
+    ArrayList<Vertex> set = Graph.getUnit().getV();
+    private boolean isAugmentedPath = true, isRunning = false;
+    private int minimumCapacity = Integer.MAX_VALUE;
+    private Vertex end;
+    private ThreadAlgorithm thread;    
+    private boolean interruption;    
 }

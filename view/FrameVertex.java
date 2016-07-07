@@ -5,8 +5,11 @@
  */
 package view;
 
-import model_control.Vertex;
-import model_control.Graph;
+import model.GraphMap;
+import view.input.SelectionHandler;
+import view.panel.Panel;
+import model.Vertex;
+import model.Graph;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -94,6 +97,7 @@ public class FrameVertex extends javax.swing.JFrame {
         out = new javax.swing.JLabel();
 
         setTitle("Vertex Info");
+        setResizable(false);
 
         vertexName.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         vertexName.setText("Vertex:");

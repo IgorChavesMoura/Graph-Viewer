@@ -1,11 +1,12 @@
-package view;
+package view.input;
 
+import view.panel.Panel;
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
 
 import java.util.ArrayList;
-import model_control.*;
+import view.Frame;
 
 /*
 	shift + a: add vertex
@@ -34,6 +35,7 @@ public class ActionKeyboard extends KeyAdapter{
 		System.out.println("VIADO PORRA HORA DO CHOU");
 		key = e.getKeyChar();
 		modifier = KeyEvent.getKeyModifiersText( e.getModifiers());
+                System.out.println(e.getKeyChar());
 	}// keyPressed
 
         public String toString(){
@@ -50,13 +52,10 @@ public class ActionKeyboard extends KeyAdapter{
 			if(key == 'A'){
 				Frame.getUnit().addVertex();
 			}
-			if(key == 'E'){
-				addClick();
-			}// if
 		}// if
 		Panel.getUnit().repaint();
 	}
-
+/*
 	public void addClick(){
 		ArrayList<Vertex> box = MultiSelection.getUnit().getMultiBox();
 		Graph graph = Graph.getUnit();
@@ -68,7 +67,7 @@ public class ActionKeyboard extends KeyAdapter{
 			}// for
 		}// for
 	}
-
+*/
 	public void keyReleased(KeyEvent e){
 		key = e.getKeyChar();
 		modifier = KeyEvent.getKeyModifiersText( e.getModifiers());

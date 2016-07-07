@@ -1,11 +1,15 @@
-package view;
+package view.input;
 
-import model_control.*;
+import view.panel.Panel;
+import model.Graph;
+import model.Point2D;
+import model.Vertex;
 
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
+import model.GraphMap;
 
 public class MoveAllHandler extends MouseAdapter{
 
@@ -18,8 +22,8 @@ public class MoveAllHandler extends MouseAdapter{
 	}
 
 	private boolean isMoving = false;
-	private Ponto buffer, newCenter, vertex;
-	private Map<String, Ponto> map = null;
+	private Point2D buffer, newCenter, vertex;
+	private Map<String, Point2D> map = null;
 
 	public void setMoviment(){
 
@@ -40,7 +44,7 @@ public class MoveAllHandler extends MouseAdapter{
 				a1 = (int)(radius*Math.sin(alpha)) + vertex.getX();
 				a2 = (int)(radius*Math.cos(alpha)) + vertex.getY();
 
-				GraphMap.getUnit().put(a, new Ponto(a1, a2));
+				GraphMap.getUnit().put(a, new Point2D(a1, a2));
 			}
 		} else{
 			for(Vertex a : Graph.getUnit().getV()){
@@ -49,7 +53,7 @@ public class MoveAllHandler extends MouseAdapter{
 				a1 = (int)-(radius*Math.sin(alpha)) + vertex.getX();
 				a2 = (int)-(radius*Math.cos(alpha)) + vertex.getY();
 
-				GraphMap.getUnit().put(a, new Ponto(a1, a2));
+				GraphMap.getUnit().put(a, new Point2D(a1, a2));
 			}
 		}// if-else
 
@@ -61,9 +65,9 @@ public class MoveAllHandler extends MouseAdapter{
 			if(!isMoving){
 				isMoving = true;
 				map = GraphMap.getUnit().getMapCopy();
-				buffer = new Ponto(e.getX(), e.getY());
+				buffer = new Point2D(e.getX(), e.getY());
 			}// isMoving
-			newCenter = new Ponto(e.getX(), e.getY());
+			newCenter = new Point2D(e.getX(), e.getY());
 			if(map!=null)
 				setMoviment();
 			Panel.getUnit().repaint();

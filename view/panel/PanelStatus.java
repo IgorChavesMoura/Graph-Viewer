@@ -1,21 +1,22 @@
-package view;
+package view.panel;
 
 import java.awt.*;
 import javax.swing.*;
 
-public class StatusPanel extends JPanel{
+public class PanelStatus extends JPanel{
 
 	private JLabel info = new JLabel("info"), action = new JLabel("action"), cursor = new JLabel("cursor");
 
 	// Singleton
-	private static StatusPanel unit;
-	public static StatusPanel getUnit(){
+	private static PanelStatus unit;
+	public static PanelStatus getUnit(){
 		if(unit == null)
-			unit = new StatusPanel();
+			unit = new PanelStatus();
 		return unit;
 	} // getUnit
-	private StatusPanel(){
+	private PanelStatus(){
 		setLayout(new GridLayout(0, 3));
+                setFocusable(true);
 		add(info);
 		add(action);
 		add(cursor);
@@ -35,4 +36,4 @@ public class StatusPanel extends JPanel{
 	}// setCursor
 
 
-}// StatusPanel
+}// PanelStatus

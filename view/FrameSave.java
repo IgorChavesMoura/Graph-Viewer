@@ -5,22 +5,24 @@
  */
 package view;
 
+import view.panel.Panel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import view.panel.PanelLeft;
 
 /**
  *
  * @author anderson
  */
-public class SaveFrame extends javax.swing.JFrame {
+public class FrameSave extends javax.swing.JFrame {
 
     /**
-     * Creates new form SaveFrame
+     * Creates new form FrameSave
      */
     
     private int state;
     
-    public SaveFrame(int state) {
+    public FrameSave(int state) {
         this.state = state;
         initComponents();
         buttonHandling();
@@ -42,7 +44,11 @@ public class SaveFrame extends javax.swing.JFrame {
         cancel = new javax.swing.JButton();
 
         setTitle("Save graph");
+        setAlwaysOnTop(true);
+        setFocusCycleRoot(false);
+        setFocusTraversalPolicyProvider(true);
         setLocation(new java.awt.Point(500, 300));
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         jLabel1.setText("your current graph still hasn't been saved. Do you wanna save?");
@@ -90,16 +96,26 @@ public class SaveFrame extends javax.swing.JFrame {
     private class ButtonHandler implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e){
+            Frame f = Frame.getUnit();
+            setVisible(false);
             if(e.getSource() == yes || e.getSource() == no){
+                
                 if(e.getSource() == yes){
-                    Frame.getUnit().save();
+                    f.save();
                 }// saving
                 
                 if(state == 0){
-                        Frame.getUnit().fileNew();
-                } else {
-                        Frame.getUnit().configRandom();
-                }// if-else
+                    new FrameNewGraph();
+                } if (state == 1){
+                    new FrameRandGraph();
+                } if (state == 2){
+                    f.open();
+                } if (state == 3){
+                    f.digraph();
+                } if (state == 4){
+                    f.weighted();
+                    PanelLeft.getUnit().disableButtons();
+                }
             }// if
             dispose();
             Panel.getUnit().repaint();

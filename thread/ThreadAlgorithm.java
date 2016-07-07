@@ -1,6 +1,9 @@
 package thread;
 
-import model_control.*;
+import control.Algorithm;
+import model.Graph;
+import control.ResidualGraph;
+import model.Vertex;
 
 public class ThreadAlgorithm implements Runnable{
     
@@ -41,20 +44,22 @@ public class ThreadAlgorithm implements Runnable{
 		state = 1;
 	}// constructor
 
+        @Override
 	public void run(){
+            Algorithm alg = Algorithm.getUnit();
 		try{
 			if(state == 0)
-				Graph.getUnit().BFS(u);
+				alg.BFS(u);
 			if(state == 1)
-				Graph.getUnit().DFS();
+				alg.DFS();
 			if(state == 3)
-				Graph.getUnit().Prim(u);
+				alg.Prim(u);
 			if(state == 4)
-				Graph.getUnit().Dijkstra(u);
+				alg.Dijkstra(u);
                         if(state == 5)
                                 ResidualGraph.getUnit().Edmonds_Karp(u, v);
                         if(state == 6)
                             ResidualGraph.getUnit().BFS(u);
 		} catch(InterruptedException e){}
-	}
-}
+	}// run
+}// ThreadAlgorithm

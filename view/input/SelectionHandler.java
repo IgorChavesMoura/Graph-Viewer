@@ -1,12 +1,17 @@
-package view;
+package view.input;
 
-import model_control.*;
+import view.panel.Panel;
+import model.Graph;
+import model.Vertex;
 
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 
 import java.util.*;
+import view.FrameVertex;
+import model.GraphMap;
+import view.panel.PanelStatus;
 
 public class SelectionHandler extends MouseAdapter{
 
@@ -21,7 +26,7 @@ public class SelectionHandler extends MouseAdapter{
         
         @Override
 	public void mouseMoved(MouseEvent e){
-		StatusPanel.getUnit().setCursor("[" + e.getX() + "," + e.getY() + "]");
+		PanelStatus.getUnit().setCursor("[" + e.getX() + "," + e.getY() + "]");
 	}
         
         public boolean isSelectedByClick(){
@@ -51,9 +56,9 @@ public class SelectionHandler extends MouseAdapter{
 
 	public void bufferInfo(){
 		if(buffer != null){
-			StatusPanel.getUnit().setInfo("[" + buffer + "]");
+			PanelStatus.getUnit().setInfo("[" + buffer + "]");
 		} else{
-			StatusPanel.getUnit().setInfo("info");
+			PanelStatus.getUnit().setInfo("info");
 		}// if-else
 	}
 

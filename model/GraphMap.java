@@ -1,20 +1,22 @@
-package view;
+package model;
 
+import view.panel.Panel;
+import model.Graph;
+import model.Point2D;
+import model.Vertex;
 import java.util.*;
-import model_control.*;
 import java.io.*;
 
 public class GraphMap implements Serializable{
 
-	static final long serialVersionUID = 1L;
-
 	/** Static Member Variables */
+        static final long serialVersionUID = 1L;
 	private static GraphMap unit;
-	private Map<String, Ponto> map = new HashMap<String, Ponto>();
+	private Map<String, Point2D> map = new HashMap<String, Point2D>();
 	private Map<String, Integer> mapSelection = new HashMap<String, Integer>();
-	boolean isAlgorithmRunning = false,
-			showPredecessor = false;
-	private Ponto multx = new Ponto(0,0), multy = new Ponto(0,0);
+	boolean isAlgorithmRunning = false;
+	boolean showPredecessor = false;
+	private Point2D multx = new Point2D(0,0), multy = new Point2D(0,0);
 
 	public static GraphMap getUnit(){
 		if (unit == null)
@@ -27,7 +29,7 @@ public class GraphMap implements Serializable{
 	}
         
         public void substitute(String a, String b){
-            Ponto p = map.get(a);
+            Point2D p = map.get(a);
             map.remove(a);
             map.put(b, p);
             
@@ -44,18 +46,18 @@ public class GraphMap implements Serializable{
 	}
 
 	public void setMultX(int w, int x){
-		multx = new Ponto(w,x);
+		multx = new Point2D(w,x);
 	}
 
 	public void setMultY(int w, int x){
-		multy = new Ponto(w,x);
+		multy = new Point2D(w,x);
 	}
 
-	public Ponto getMultX(){
+	public Point2D getMultX(){
 		return multx;
 	}
 
-	public Ponto getMultY(){
+	public Point2D getMultY(){
 		return multy;
 	}
 
@@ -75,7 +77,7 @@ public class GraphMap implements Serializable{
 		showPredecessor = b;
 	}// setShowPredecessor
 
-	public void put(Vertex u, Ponto p){
+	public void put(Vertex u, Point2D p){
 		map.put(u.getName(), p);
 	}//put
 
@@ -83,12 +85,12 @@ public class GraphMap implements Serializable{
 		mapSelection.put(u.getName(),x);
 	}// put
 
-	public Ponto get(Vertex u){
+	public Point2D get(Vertex u){
 		return map.get(u.getName());
 	}
 
-	public Map<String, Ponto> getMapCopy(){
-		Map<String, Ponto> ret = new HashMap<String, Ponto>();
+	public Map<String, Point2D> getMapCopy(){
+		Map<String, Point2D> ret = new HashMap<String, Point2D>();
 		Graph g = Graph.getUnit();
 		for(Vertex a : g.getV()){
 			ret.put(a.getName(), map.get(a.getName()));
@@ -101,7 +103,7 @@ public class GraphMap implements Serializable{
 		mapSelection.remove(u.getName());
 	}// rem
 
-	public Map<String, Ponto> getMap(){
+	public Map<String, Point2D> getMap(){
 		return map;
 	}// getMap
 
@@ -111,7 +113,7 @@ public class GraphMap implements Serializable{
 
 	public Vertex isOn(int x, int y){
 		Set<String> key = map.keySet();
-		Ponto p;
+		Point2D p;
 		for(String u : key){
 			p = map.get(u);
 			if(x >= p.getX() && x <= p.getX() + Panel.SIZE && y >= p.getY() && y <= p.getY() + Panel.SIZE)
@@ -121,7 +123,7 @@ public class GraphMap implements Serializable{
 	}// isOn
 
 	public void setXY(Vertex v, int x, int y){
-		map.put(v.getName(), new Ponto(x,y));
+		map.put(v.getName(), new Point2D(x,y));
 	}// setXY
 
 	private GraphMap(){} // constructor

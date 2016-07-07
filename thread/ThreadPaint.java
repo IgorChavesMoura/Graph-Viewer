@@ -1,5 +1,6 @@
 package thread;
 
+import view.panel.Panel;
 import view.*;
 
 public class ThreadPaint implements Runnable{
@@ -17,6 +18,10 @@ public class ThreadPaint implements Runnable{
 	public void setSpeed(int newSpeed){
 		speed = newSpeed;
 	}
+        
+        public int getSpeed(){
+            return speed;
+        }
 
 	private ThreadPaint(){
 		t = new Thread(this, "Paint");

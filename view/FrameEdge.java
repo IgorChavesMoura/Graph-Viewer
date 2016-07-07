@@ -5,11 +5,13 @@
  */
 package view;
 
+import view.panel.PanelStatus;
+import view.panel.Panel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
-import model_control.Graph;
-import model_control.ResidualGraph;
+import model.Graph;
+import control.ResidualGraph;
 import thread.ThreadAlgorithm;
 
 /**
@@ -117,14 +119,18 @@ public class FrameEdge extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "One of ends doesn't exist");
         else switch(state){
             case 1:
-                g.addEdge(g.getVertex(text1), g.getVertex(text2));
-                StatusPanel.getUnit().setAction("added edge: (" + g.getVertex(text1) + ", " + g.getVertex(text2) + ")");
+                if(!g.existsEdge(g.getVertex(text2), g.getVertex(text1))){
+                    g.addEdge(g.getVertex(text1), g.getVertex(text2));
+                    PanelStatus.getUnit().setAction("added edge: (" + g.getVertex(text1) + ", " + g.getVertex(text2) + ")");
+                }// if
                 break;
             case 2:
                 g.removeEdge(g.getVertex(text1), g.getVertex(text2));
-                StatusPanel.getUnit().setAction("removed edge: (" + g.getVertex(text1) + ", " + g.getVertex(text2) + ")");
+                PanelStatus.getUnit().setAction("removed edge: (" + g.getVertex(text1) + ", " + g.getVertex(text2) + ")");
                 break;
             case 3:
+                System.out.println(g.getVertex(text1));
+                System.out.println(g.getVertex(text2));
                 Frame.getUnit().flow(g.getVertex(text1), g.getVertex(text2));
                 break;
         }// switch

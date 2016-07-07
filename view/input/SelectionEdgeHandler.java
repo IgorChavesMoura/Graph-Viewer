@@ -1,11 +1,15 @@
-package view;
+package view.input;
 
-import model_control.*;
+import view.panel.Panel;
+import model.Graph;
+import model.Point2D;
+import model.Vertex;
 
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.*;
+import model.GraphMap;
 
 public class SelectionEdgeHandler extends MouseAdapter{
 
@@ -34,8 +38,8 @@ public class SelectionEdgeHandler extends MouseAdapter{
 	// *** Mouse Events ***
 	public void mouseDragged(MouseEvent e){
 		GraphMap g = GraphMap.getUnit();
-		Map<String, Ponto> map = g.getMap();
-		Ponto p;
+		Map<String, Point2D> map = g.getMap();
+		Point2D p;
 		Vertex loop = null;
 		if(e.isAltDown() && !GraphMap.getUnit().isAlgorithmRunning()){
 			if(!isDragging){
@@ -66,11 +70,13 @@ public class SelectionEdgeHandler extends MouseAdapter{
 				if(v == null)
 					setEdgeBuffer(0,0,0,0);
 				else{
+                                    if(!g2.existsEdge(v, u)){
 					if(!g2.isWeighted()){
 						g2.addEdge(u, v);
 					} else {
 						setWeight(u, v);
 					}// if-else
+                                    }
 				}// if-else
 				Panel.getUnit().repaint();
 			}
@@ -79,9 +85,6 @@ public class SelectionEdgeHandler extends MouseAdapter{
 			setEdgeBuffer(0,0,0,0);
 			u = null;
 			v = null;
-			//DEBUG
-			Graph gra = Graph.getUnit();
-			gra.showAll();
 		}// isAltDown
 	}// mouseReleased
 

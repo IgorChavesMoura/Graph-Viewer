@@ -1,11 +1,15 @@
-package view;
+package view.input;
 
-import model_control.*;
+import view.panel.Panel;
+import model.Graph;
+import model.Point2D;
+import model.Vertex;
 
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
+import model.GraphMap;
 
 public class MultiSelection extends MouseAdapter{
 
@@ -18,8 +22,8 @@ public class MultiSelection extends MouseAdapter{
 	}// getUnit
 
 	private boolean isMoving = false;
-	private Ponto buffer, newCenter, vertex;
-	private Map<String, Ponto> map;
+	private Point2D buffer, newCenter, vertex;
+	private Map<String, Point2D> map;
 	private boolean multi, isDragging;
 
 	private ArrayList<Vertex> multiBox = new ArrayList<Vertex>();
@@ -66,14 +70,14 @@ public class MultiSelection extends MouseAdapter{
                     vertex = map.get(a.getName());
                     a1 = (int)(radius*Math.sin(alpha)) + vertex.getX();
                     a2 = (int)(radius*Math.cos(alpha)) + vertex.getY();
-                    GraphMap.getUnit().put(a, new Ponto(a1, a2));
+                    GraphMap.getUnit().put(a, new Point2D(a1, a2));
                 }
             } else{
                 for(Vertex a : multiBox){
                     vertex = map.get(a.getName());
                     a1 = (int)-(radius*Math.sin(alpha)) + vertex.getX();
                     a2 = (int)-(radius*Math.cos(alpha)) + vertex.getY();
-                    GraphMap.getUnit().put(a, new Ponto(a1, a2));
+                    GraphMap.getUnit().put(a, new Point2D(a1, a2));
                 }
             }
 
@@ -129,7 +133,7 @@ public class MultiSelection extends MouseAdapter{
         GraphMap gm = GraphMap.getUnit();
         ArrayList<Vertex> u;
         Vertex x = gm.isOn(e.getX(), e.getY());
-        Ponto p, q;
+        Point2D p, q;
         if((buf == null || multiEmpty()) && x == null){
             multiBox.clear();
         }
@@ -139,10 +143,10 @@ public class MultiSelection extends MouseAdapter{
                 gm.setMultX(e.getX(), e.getY());
                 isMoving = true;
                 map = gm.getMapCopy();
-                buffer = new Ponto(e.getX(), e.getY());
+                buffer = new Point2D(e.getX(), e.getY());
             }// if
             
-            newCenter = new Ponto(e.getX(), e.getY());
+            newCenter = new Point2D(e.getX(), e.getY());
             setMoviment();
             Panel.getUnit().repaint();
             

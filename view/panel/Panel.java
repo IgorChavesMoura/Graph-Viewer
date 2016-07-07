@@ -1,5 +1,9 @@
-package view;
+package view.panel;
 
+import model.Graph;
+import model.Point2D;
+import control.ResidualGraph;
+import model.Vertex;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
@@ -9,8 +13,9 @@ import java.awt.image.*;
 import java.io.*;
 import javax.imageio.*;
 
-import model_control.*;
 import thread.*;
+import model.GraphMap;
+import view.input.SelectionEdgeHandler;
 
 public class Panel extends JPanel{
 
@@ -31,6 +36,7 @@ public class Panel extends JPanel{
 
 	private Panel(){
 		setBackground(new Color(88, 188, 120));
+                setFocusable(true);
 	}
 
 	public BufferedImage loadSprite(String name){
@@ -51,7 +57,7 @@ public class Panel extends JPanel{
 	public void drawLoop(Vertex x){
 		if(x != null){
 			int radius = 50;
-			Ponto p = GraphMap.getUnit().get(x);
+			Point2D p = GraphMap.getUnit().get(x);
 			graphics.drawOval(p.getX() + SIZE/2, p.getY() - SIZE/2, radius, radius);
 
 			if(Graph.getUnit().isWeighted() && !isBufferLoop)
@@ -90,7 +96,7 @@ public class Panel extends JPanel{
 
 	public void drawOrientedLoop(Vertex x){
 		drawLoop(x);
-		Ponto p = GraphMap.getUnit().get(x);
+		Point2D p = GraphMap.getUnit().get(x);
 		drawTriangle(p.getX() + SIZE, p.getY(), p.getX() - 50 + SIZE , p.getY());
 	}
 
@@ -101,10 +107,11 @@ public class Panel extends JPanel{
 		vertexGraphics = (Graphics2D)g;
 
 		GraphMap gMap = GraphMap.getUnit();
-		Map<String, Ponto> map = gMap.getMap();
+		Map<String, Point2D> map = gMap.getMap();
+                PanelLog.getUnit().updateText();
 
 		Set<String> set = map.keySet();
-		Ponto p, q;
+		Point2D p, q;
 
     		BasicStroke dashed = new BasicStroke(1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f);
 
@@ -128,7 +135,7 @@ public class Panel extends JPanel{
 */
 	}// paintComponent
 
-	public void drawBoxSelection(Ponto p, Ponto q){
+	public void drawBoxSelection(Point2D p, Point2D q){
 		// horizontal
 		graphics.drawLine(p.getX(), p.getY(), q.getX(), p.getY());
 		graphics.drawLine(p.getX(), q.getY(), q.getX(), q.getY());
@@ -171,8 +178,8 @@ public class Panel extends JPanel{
 
 	public void drawVertex(Vertex x){
 		GraphMap gMap = GraphMap.getUnit();
-		Map<String, Ponto> map = gMap.getMap();
-		Ponto p;
+		Map<String, Point2D> map = gMap.getMap();
+		Point2D p;
 		Color color = new Color(40,40,40);
 		int state = (int)gMap.getMapSelection().get(x.getName());
 		p = map.get(x.getName()); // get coordinate
@@ -225,8 +232,8 @@ public class Panel extends JPanel{
 	public void drawEdge(Vertex x){
             GraphMap gMap = GraphMap.getUnit();
             Graph graph = Graph.getUnit();
-            Map<String, Ponto> map = gMap.getMap();
-            Ponto p,q;
+            Map<String, Point2D> map = gMap.getMap();
+            Point2D p,q;
 
             p = map.get(x.getName()); // get coordinate
 
@@ -261,11 +268,13 @@ public class Panel extends JPanel{
                         q = map.get(y.getName());
                         graphics.drawLine(p.getX() + SIZE/2, p.getY() + SIZE/2, q.getX() + SIZE/2, q.getY() + SIZE/2); // Draw Edge
 
-                        if(!ResidualGraph.getUnit().isRunning()){
-                            graphics.drawString("" + x.getWeight(y), (p.getX() + q.getX())/2, (p.getY() + q.getY())/2);
-                        } else {
-                            graphics.drawString("" + x.getFlow(y) + "/" + x.getWeight(y), (p.getX() + q.getX())/2, (p.getY() + q.getY())/2);
-                        }// if-else
+                        if(Graph.getUnit().isWeighted()){
+                            if(!ResidualGraph.getUnit().isRunning()){
+                                graphics.drawString("" + x.getWeight(y), (p.getX() + q.getX())/2, (p.getY() + q.getY())/2);
+                            } else {
+                                graphics.drawString("" + x.getFlow(y) + "/" + x.getWeight(y), (p.getX() + q.getX())/2, (p.getY() + q.getY())/2);
+                            }// if-else
+                        }
                     }
                 }//for
             }// if-else
@@ -273,14 +282,17 @@ public class Panel extends JPanel{
 
 	public void drawEdgePredecessor(Vertex x){
 		GraphMap gMap = GraphMap.getUnit();
-		Map<String, Ponto> map = gMap.getMap();
-		Ponto p,q;
+		Map<String, Point2D> map = gMap.getMap();
+		Point2D p,q;
 		p = map.get(x.getName()); // get coordinate
 		graphics.setColor(Color.RED);
 		q = map.get(x.getPredecessor().getName());
 		graphics.drawLine(q.getX() + SIZE/2, q.getY() + SIZE/2, p.getX() + SIZE/2, p.getY() + SIZE/2); // Draw Edge
+                
 		if(Graph.getUnit().isDirected())
-			drawTriangle(q.getX(), q.getY(), p.getX(), p.getY());
+                    drawTriangle(q.getX(), q.getY(), p.getX(), p.getY());
+                if(Graph.getUnit().isWeighted())
+                    graphics.drawString("" + x.getPredecessor().getWeight(x), (p.getX() + q.getX())/2, (p.getY() + q.getY())/2);
 	}
 
 	public void drawTriangle(int x1, int y1, int x2, int y2){

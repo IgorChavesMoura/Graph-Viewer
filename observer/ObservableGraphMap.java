@@ -1,7 +1,7 @@
 package observer;
-import model_control.*;
+import model.Vertex;
 
-public class ObservableGraphMap implements Observable{
+public class ObservableGraphMap implements ObservableVertex{
 
 	private Observer o;
 	private Vertex state;

@@ -5,8 +5,11 @@
  */
 package view;
 
-import model_control.Vertex;
-import model_control.Graph;
+import view.input.SelectionHandler;
+import view.input.SelectionEdgeHandler;
+import view.panel.Panel;
+import model.Vertex;
+import model.Graph;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
@@ -21,10 +24,16 @@ public class FrameEdgeEdit extends javax.swing.JFrame {
      * Creates new form FrameEdgeEdit
      */
     
+    private int state;
     Vertex u, v;
-    public FrameEdgeEdit() {
+    public FrameEdgeEdit(int state) {
+        this.state = state;
         initComponents();
         getEnd();
+ 
+        if(state == 2)
+            jLabel1.setText("Set the edge ends and weight");        
+        
         buttonHandling();
         setVisible(true);
     }
@@ -48,6 +57,7 @@ public class FrameEdgeEdit extends javax.swing.JFrame {
 
         setTitle("Edit Edge");
         setLocation(new java.awt.Point(500, 300));
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         jLabel1.setText("Choose the edge ends and edit");
@@ -120,21 +130,37 @@ public class FrameEdgeEdit extends javax.swing.JFrame {
             weight = SelectionEdgeHandler.getUnit().getInt(textWeight.getText());
             x = graph.getVertex(s1);
             y = graph.getVertex(s2);
-            if(x != null && y != null){
-                x.putWeight(y, weight);
-                if(!graph.isDirected()){
-                    y.putWeight(x, weight);
+            if(state == 1){
+
+                if(x != null && y != null && !isOver(weight)){
+                    x.putWeight(y, weight);
+                    if(!graph.isDirected()){
+                        y.putWeight(x, weight);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Invalid values");
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "Invalid values");
+            } if (state == 2){
+                if(!isOver(weight)){
+                    System.out.println(weight);
+                    graph.addEdge(x,y,weight);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Invalid values");
+                }
             }
-        } catch (NumberFormatException ex){}
+        } catch (NumberFormatException ex){
+            JOptionPane.showMessageDialog(null, "Invalid values");            
+        }
     }
     
     public void buttonHandling(){
         ButtonHandler handler = new ButtonHandler();
         ok.addActionListener(handler);
         cancel.addActionListener(handler);
+    }
+    
+    public boolean isOver(int n){
+        return n > 100000;
     }
 
     private class ButtonHandler implements ActionListener{
