@@ -2,6 +2,8 @@ package model;
 
 import java.io.*;
 
+// ANDERSON, COMENTE A VOSSA CLASSE
+
 public class Point2D implements Serializable{
 
     // *** Constructor *** //

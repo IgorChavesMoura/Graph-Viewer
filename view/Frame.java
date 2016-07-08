@@ -120,7 +120,7 @@ public class Frame extends JFrame{
             if(newName != null){
                     Vertex v = Graph.getUnit().getVertex(newName);
                     if(v == null){
-                            JOptionPane.showMessageDialog(null, newName + " doesn't exists");
+                            JOptionPane.showMessageDialog(null, newName + " doesn't exist");
                     } else{
                             t = new ThreadAlgorithm(v, 3);
                             PanelMenu.getUnit().disableButtons();
@@ -134,7 +134,7 @@ public class Frame extends JFrame{
             if(newName != null){
                     Vertex v = Graph.getUnit().getVertex(newName);
                     if(v == null){
-                            JOptionPane.showMessageDialog(null, newName + " doesn't exists");
+                            JOptionPane.showMessageDialog(null, newName + " doesn't exist");
                     } else{
                             t = new ThreadAlgorithm(v, 4);
                             PanelMenu.getUnit().disableButtons();
@@ -246,7 +246,7 @@ public class Frame extends JFrame{
         if(newName != null){
                 Vertex v = graph.getVertex(newName);
                 if(v == null){
-                        JOptionPane.showMessageDialog(null, newName + " doesn't exists");
+                        JOptionPane.showMessageDialog(null, newName + " doesn't exist");
                 } else{
                         t = new ThreadAlgorithm(v, 0);
                         PanelMenu.getUnit().disableButtons();

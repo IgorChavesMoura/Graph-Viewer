@@ -16,7 +16,8 @@ import model.Vertex;
 public class GraphOperation {
 
     /** Método que converte um grafo simples em um orientado.
-      * @params direction - NÃO NECESSÁRIO, TROCAR POR TRUE */
+      * @params direction - NÃO NECESSÁRIO, TROCAR POR TRUE 
+      */
     public static void simpleOriented(boolean direction){
         Graph g = Graph.getUnit();
         g.setDirection(direction);
@@ -33,7 +34,8 @@ public class GraphOperation {
     }
 
     /** Método que converte um grafo orientado em simples.
-      * @params direction - NÃO NECESSÁRIO, TROCAR POR FALSE. */
+      * @params direction - NÃO NECESSÁRIO, TROCAR POR FALSE. 
+      */
     public static void orientedSimple(boolean direction){
         Graph g = Graph.getUnit();
         for(Vertex x: g.getV()){
@@ -69,7 +71,4 @@ public class GraphOperation {
             }// if-else
         }// for
     }
-    
-
-
 }

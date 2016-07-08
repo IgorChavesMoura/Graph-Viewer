@@ -30,13 +30,14 @@ public class Graph implements Serializable{
     */
     public static void setUnit(Graph g){
         unit = g;
-    }    
+    }
+        
     // *** Singleton Instance *** //
     
     // *** setters / getters *** //
+    
     /** Esse método configura se o peso das arestas do grafo é aleatório ou não.
-      * @param boolean - verdadeiro se o peso das arestas do grafo é aleatório ou falso caso contrári
-        * @param - variável que retorna verdadeiro se e falso caso contrário.o.  
+      * @param boolean - verdadeiro se o peso das arestas do grafo é aleatório ou falso caso contrário.  
     */
     public void setRandWeightValues(boolean b){
         randWeightValues = b;
@@ -64,7 +65,7 @@ public class Graph implements Serializable{
     }
 
     /** Esse método retorna se o grafo tem função de peso ou não.
-      * @return boolean - variável que indica verdadeiro se existe função de peso e falso caso contrário
+      * @return boolean - indica verdadeiro se existe função de peso e falso caso contrário.
     */
     public boolean isWeighted(){
         return isWeighted;
@@ -85,7 +86,7 @@ public class Graph implements Serializable{
     }    
     // *** setters/getters *** //
     
-    // *** Other Functions *** //
+    // *** Other Methods *** //
 
     /** Método que esvazia a coleção de vértices. */
     public void clear(){
@@ -105,9 +106,9 @@ public class Graph implements Serializable{
             x.setParallel(false);
         }
     }
-    // *** Other Functions *** //
+    // *** Other Methods *** //
     
-    // *** Constructor *** //
+    // *** Constructors *** //
 
     /** Construtor da classe
       * @param pdirected - variável cujo valor é verdadeiro para o grafo ser direcionado e falso caso contrário
@@ -128,11 +129,12 @@ public class Graph implements Serializable{
             addVertex(i.toString());
         }
     }
-    // *** Constructor *** //
+    // *** Constructors *** //
 
     /**Método que retorna a instância de um vértice do grafo.
       *@param name - nome do vértice a ser retornado. 
-      *@return Vertex - vértice com o nome entrado ou null caso o vértice não exista. */    
+      *@return Vertex - vértice com o nome entrado ou null caso o vértice não exista. 
+      */    
     public Vertex getVertex(String name){
         for(Vertex v : V)
             if(v.getName().equals(name))
@@ -142,7 +144,8 @@ public class Graph implements Serializable{
     
     /** Função para adicionar arestas ao grafo.
       * @param u - extremidade inicial da aresta. 
-      * @param v - extremidade final da aresta*/
+      * @param v - extremidade final da aresta
+      */
     public void addEdge(Vertex u, Vertex v)
     {
         if(!existsEdge(u, v)){
@@ -164,8 +167,9 @@ public class Graph implements Serializable{
 
     /** Função para adicionar arestas ao grafo com função de peso.
       * @param u - extremidade inicial da aresta. 
-      * @param v - extremidade fim da aresta. 
-      * @param weight - peso da aresta*/
+      * @param v - extremidade final da aresta. 
+      * @param weight - peso da aresta
+      */
     public void addEdge(Vertex u, Vertex v, int weight){
         this.addEdge(u, v);
         u.putWeight(v, weight);
@@ -176,7 +180,8 @@ public class Graph implements Serializable{
     /** Metódo que retorna se a aresta entrada existe ou não.
       * @param u - extremidade inicial da aresta.
       * @param v - extremidade final da aresta.
-      * @return boolean - verdadeiro se a aresta existe e falso caso contrário. */
+      * @return boolean - verdadeiro se a aresta existe e falso caso contrário. 
+      */
     public boolean existsEdge(Vertex u, Vertex v){
         Graph g = Graph.getUnit();
         String uN = u.getName(), vN = v.getName();
@@ -186,11 +191,11 @@ public class Graph implements Serializable{
             return g.getVertex(uN).getAdj().contains(g.getVertex(vN));
     }
     
-
     /** Método que remove uma aresta.
       * @param u - extremidade inicial da aresta.
       * @param v - extremidade final da aresta.
-      * @throws ConcurrentModificationException */
+      * @throws ConcurrentModificationException 
+      */
     public void removeEdge(Vertex u, Vertex v) throws ConcurrentModificationException{
         u.getAdj().remove(v);
 
@@ -204,9 +209,9 @@ public class Graph implements Serializable{
     }
 
     /** Método para adicionar um vértice ao grafo. 
-      * @param pname - nome do novo vértice. */
-    public void addVertex(String pname)
-    {
+      * @param pname - nome do novo vértice. 
+      */
+    public void addVertex(String pname){
         Vertex v = new Vertex(pname);
 
         V.add(v);
@@ -219,10 +224,9 @@ public class Graph implements Serializable{
     }
 
     /** Método que remove um vértice do grafo.
-      * @param u - vértice a ser removido */
-    public void removeVertex(Vertex u)
-    {
-        
+      * @param u - vértice a ser removido 
+      */
+    public void removeVertex(Vertex u){        
         for(Vertex v : V){
             if(v != u)
                 removeEdge(v, u);

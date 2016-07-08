@@ -1,0 +1,54 @@
+Pacote Model:
+	-Vertex (quase pronto!, falta coisa que só o Anderson sabe o que é)
+	-Point2D (falta tudo)
+	-GraphMap (falta tudo)
+	-GraphFile (falta tudo)
+	-Graph (quase pronto!, falta coisa que só o Anderson sabe o que é)
+	
+Pacote Control:
+	-Algorithm (quase pronto!, falta coisa que só o Anderson sabe o que é)
+	-GraphOperation (quase tudo, mas falta arrumar os métodos de trocar pra direcionado e não direcionado)
+	-OpenSave (falta tudo)
+	-ResidualGraph (falta umas coisas que o Anderson sabe o que é)
+	
+Pacote Main:
+	-Main (precisa comentar isso?)
+	
+Pacote Observer:
+	-Observable (falta tudo)
+	-ObservableGraphMap (falta tudo)
+	-ObservableVertex (falta tudo)
+	-Observer (falta tudo)
+	-ObserverGraphMap (falta tudo)
+	-ObserverGraphMapPaint (falta tudo)
+	-ObserverGraphMapRemove (falta tudo)
+	
+Pacote Resource:
+	-IH, ZI FUDEUUUUUUUUUUUUUUUUUUUUUU!!!!!!!!!!!!!!!
+	
+Pacote Thread:
+	-ThreadAlgorithm (falta tudo)
+	-ThreadPaint (falta tudo)
+	
+Pacote View:
+	-Frame (falta tudo)
+	-FrameEdge (falta tudo)
+	-FrameEdgeEdit (falta tudo)
+	-FrameRandGraph (falta tudo)
+	-FrameSave (falta tudo)
+	-FrameSpeed (falta tudo)
+	-FrameVertex (falta tudo)
+	
+	-Pacote Input:
+		-ActionKeyboard (falta tudo)
+		-MoveAllHandler (falta tudo)
+		-MultiSelection (falta tudo)
+		-SelectionEdgeHandler (falta tudo)
+		-SelectionHandler (falta tudo)
+		
+	-Pacote Panel:
+		-Panel (falta tudo)
+		-PanelLeft (falta tudo)
+		-PanelLog (falta tudo)
+		-PanelMenu (falta tudo)
+		-PanelStatus (falta tudo)

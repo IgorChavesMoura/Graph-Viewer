@@ -18,7 +18,8 @@ public class ThreadAlgorithm implements Runnable{
         public Thread getThread(){
             return t;
         }
-
+	
+	// UAT? EOQ?
 	public boolean isAlive(){
 		return t.isAlive();
 	}
@@ -44,7 +45,7 @@ public class ThreadAlgorithm implements Runnable{
 		state = 1;
 	}// constructor
 
-        @Override
+    @Override
 	public void run(){
             Algorithm alg = Algorithm.getUnit();
 		try{

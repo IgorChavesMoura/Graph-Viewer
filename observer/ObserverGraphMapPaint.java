@@ -8,6 +8,7 @@ import view.*;
 public class ObserverGraphMapPaint implements Observer{
 
 	private int color;
+	
 	private Panel pan = Panel.getUnit();
 
 	public void update(ObservableVertex o){
@@ -24,4 +25,5 @@ public class ObserverGraphMapPaint implements Observer{
 	public void setColor(int newColor){
 		color = newColor;
 	}
+	
 }// ObserverGraphMapPaint

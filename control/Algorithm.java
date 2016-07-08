@@ -34,10 +34,10 @@ public class Algorithm {
         return unit;
     }
 
-    /** Construtor da classe. */   
+    /** Construtor padrão da classe. */   
     private Algorithm(){}
     
-    /** Variável responsável por finalizar o algoritmo; o algoritmo encerra sse a variável for verdadeira */
+    /** Variável responsável por finalizar o algoritmo; o algoritmo encerra se e somente se a variável for verdadeira */
     private boolean interruption;
     
     /** Variável global correspondente à contagem do tempo inicial e final dos vértices no algoritmo DFS. */
@@ -46,8 +46,7 @@ public class Algorithm {
     /** Método para interromper a execução do algoritmo. */   
     public void setInterruption(boolean b){
         interruption = b;
-    }   
-       
+    }      
         
 	// Observer Tools
 
@@ -66,7 +65,7 @@ public class Algorithm {
         }
     }
 
-    /** Algoritmo de busca em largura (BFS).
+    /** Método que roda o algoritmo de busca em largura (BFS).
       * @link https://en.wikipedia.org/wiki/Breadth-first_search
       * @param s - Vértice fonte.
       * @throws java.lang.InterruptedException */
@@ -123,9 +122,10 @@ public class Algorithm {
         }
     }
 
-    /** Algoritmo busca em profundidade (DFS)
+    /** Método que roda o algoritmo de busca em profundidade (DFS)
       * @link https://en.wikipedia.org/wiki/Depth-first_search 
-      * @throws java.lang.InterruptedException */
+      * @throws java.lang.InterruptedException 
+      */
     public void DFS() throws InterruptedException{
         ObservableGraphMap obs = new ObservableGraphMap(null);
         ObserverGraphMapPaint ob = new ObserverGraphMapPaint(3);
@@ -152,9 +152,10 @@ public class Algorithm {
         }
     }
 
-    /** Algoritmo auxiliar do DFS
+    /** Método que roda o algoritmo auxiliar do DFS
       * @param u - Vértice descoberto mais recentemente
-      * @throws java.lang.InterruptedException */
+      * @throws java.lang.InterruptedException 
+      */
     public void DFS_Visit(Vertex u)  throws InterruptedException
     {
         ListIterator iter;
@@ -188,7 +189,8 @@ public class Algorithm {
 
     /** Algoritmo para inicializar fonte única, utilizado no algoritmo de Dijkstra
       * @param s - Vértice fonte
-      * @throws InterruptedException */
+      * @throws InterruptedException 
+      */
     public void initializeSingleSource(Vertex s) throws InterruptedException {
         ObservableGraphMap obs = new ObservableGraphMap(null);
         ObserverGraphMapPaint ob = new ObserverGraphMapPaint(3);
@@ -206,7 +208,8 @@ public class Algorithm {
     /** Algoritmo de relaxamento de arestas, utilizado no algoritmo de Dijkstra
       * @param u - extremidade inicial da aresta
       * @param v - extremidade final da aresta
-      * @throws InterruptedException */
+      * @throws InterruptedException 
+      */
     public void relax(Vertex u, Vertex v) throws InterruptedException{
         ObservableGraphMap obs = new ObservableGraphMap(null);
         ObserverGraphMapPaint ob = new ObserverGraphMapPaint(3);
@@ -294,7 +297,7 @@ public class Algorithm {
         }//while
     }
 
-    /** Método que retorna o vértice de distância mínima, utilizado no Prim
+    /** Método que retorna o vértice de distância mínima, utilizado no Prim e Dijkstra
       * @param list - coleção contendo os vértices
       * @return Vertex - vértice com distância mínima
       */

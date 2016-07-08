@@ -43,31 +43,35 @@ public class Vertex implements Serializable
         isParallel = b;
     }    
     
-    /** Método que configura . do vértice.
-      * @param 
+    /** Método que configura o nome do vértice.
+      * @param name - nome do vértice
       */
     public void setName(String name){
         this.name = name;
     }
-    /** Construtor da classe Vertex. */
+    /** Construtor padrão da classe Vertex. */
     public Vertex(){
         Adj = new ArrayList<>();
     }
     
-    /** Método que configura . do vértice.
-      * @param 
+    /** Método que configura o peso da aresta do vértice a algum vizinho.
+      * @param u - vizinho do vértice
+      * @param w - peso da aresta
       */
     public void putWeight(Vertex u, int w){
         weight.put(u.getName(), w);
     }
 
-    /** Método que retorna o peso que aresta cujo o vértice é extremidade final.
-      * @return int - peso da aresta. */
+    /** Método que retorna o peso da aresta do vértice a algum vizinho.
+      * @param u - vizinho do vértice
+      * @return int - peso da aresta. 
+      */
     public int getWeight(Vertex u){
         return weight.get(u.getName());
     }
+    
     /** Construtor da classe Vertex.
-      * @params name = nome do vertice. */
+      * @params name - nome do vertice. */
     public Vertex(String name){
         this();
         this.name = name;
@@ -81,33 +85,37 @@ public class Vertex implements Serializable
 
     /** Método que retorna o tempo de descoberta do vértice.
       * @return int - tempo de descoberta. 
-      * @deprecated  getDiscoveryTime() é o mais atual. */
+      * @deprecated  getDiscoveryTime() é o mais atual. 
+      */
     public int getInit(){
         return discoveryTime;
     }
 
     /** Método que retorna o tempo de finalização do vértice.
       * @return int - tempo de finalização.
-      * @deprecated getFinalTime() é o mais atual. */
+      * @deprecated getFinalTime() é o mais atual. 
+      */
     public int getFinal(){
         return finalTime;
     }
     
     /** Método que retorna a lista de adjacência do vértice.
-      * @return List<Vertex> - lista de adjacência*/
+      * @return List<Vertex> - lista de adjacência
+      */
     public List<Vertex> getAdj(){
         return Adj;
     }
     
     /** Método que configura a distância do vértice.
-      * @param d = nova distância
+      * @param d - nova distância
       */
     public void setDistance(int d){
         distance = d;
     }      
     
     /** Método que retorna a distância do vértice.
-      * @return int - distância do vértice*/
+      * @return int - distância do vértice
+      */
     public int getDistance(){
         return distance;
     }
@@ -120,7 +128,6 @@ public class Vertex implements Serializable
         in = x;
     }
     
-    
     /** Método que configura o grau de saída do vértice.
       * @param x - inteiro com o valor do grau de saída
       */
@@ -129,17 +136,21 @@ public class Vertex implements Serializable
     }
     
     /** Método que retorna o grau de entrada do vértice.
-      * @return int - grau de entrada do vértice. */
+      * @return int - grau de entrada do vértice. 
+      */
     public int getIn(){
         return in;
     }
+    
     /** Método que retorna o grau de saída do vértice.
-      * @return int - grau de saída do vértice. */
+      * @return int - grau de saída do vértice. 
+      */
     public int getOut(){
         return out;
     }
     
-    /** Método que sobrescreve o método toString() da classe Object, configurando um polimorfismo de sobrecarga. */  
+    /** Método que sobrescreve o método toString() da classe Object para retornar o nome do vértice, configurando um polimorfismo de sobrecarga. 
+      */  
     @Override
     public String toString(){
         return getName();
@@ -150,14 +161,18 @@ public class Vertex implements Serializable
       */
     public void setPredecessor(Vertex v){
         predecessor = v;
-    }       
+    }
+           
     /** Método que retorna o vértice predecessor do vértice.
-      * @return Vertex - predecessor. */
+      * @return Vertex - predecessor. 
+      */
     public Vertex getPredecessor(){
         return predecessor;
     }
+    
     /** Método que retorna o tempo de descoberta do vértice.
-      * @return int - tempo de descoberta. */
+      * @return int - tempo de descoberta. 
+      */
     public int getDiscoveryTime(){
         return discoveryTime;
     }        
@@ -167,9 +182,11 @@ public class Vertex implements Serializable
       */
     public void setDiscoveryTime(int time){
         discoveryTime = time;
-    }       
+    }
+           
     /** Método que retorna o tempo de finalização do vértice.
-      * @return int - tempo de finalização. */
+      * @return int - tempo de finalização. 
+      */
     public int getFinalTime(){
         return finalTime;
     }        
@@ -179,15 +196,18 @@ public class Vertex implements Serializable
       */
     public void setFinalTime(int time){
         finalTime = time;
-    }        
+    }
+            
     /** Esse método retorna se o vértice está na árvore geradora mínima ou não.
-      * boolean - verdadeiro se o vértice está na AGM e falso caso contrário. */
+      * boolean - verdadeiro se o vértice está na AGM e falso caso contrário. 
+      */
     public boolean isInMST(){
         return isInMST;
     }        
     
     /** Esse método configura se o vértice está na árvore geradora mínima ou não.
-      * b - verdadeiro se o vértice está na AGM e falso caso contrário. */
+      * b - verdadeiro se o vértice está na AGM e falso caso contrário. 
+      */
     public void isInMST(boolean b){
         isInMST = b;
     }
@@ -204,7 +224,9 @@ public class Vertex implements Serializable
     /** Variável que indica se o vértice está na árvore geradora mínima ou não */
     boolean isInMST;
 
-    /** Variável que indica se o vértice é paralelo ou não (?) */
+    /** Variável que indica se o vértice é paralelo ou não (?) 
+      ANDERSON, VEJA AQUI DEPOIS		
+      */
     boolean isParallel;
 
     /** Distância do vértice, atributo utilizado nos algoritmos BFS, Prim e Dijkstra. */
@@ -222,10 +244,10 @@ public class Vertex implements Serializable
     /** Nome do vértice */
     String name;
 
-    /** Vértice predessor do vértice */
+    /** Vértice predessor do vértice, utilizado nos algoritmos BFS, DFS, Prim e Dijkstra */
     Vertex predecessor;
 
-    /** Lista de adjacência do vértice */
+    /** Lista de adjacência do vértice, isto é, os vizinhos do vértice */
     ArrayList<Vertex> Adj;
 
     /** Função de peso do vértice com seus vizinhos */
@@ -234,7 +256,8 @@ public class Vertex implements Serializable
     /** Função de fluxo do vértice com seus vizinhos */
     Map<String, Integer> flow = new HashMap<>();
 
-    /** Função de paralelismo do vértice com seus vizinhos (?) */
+    /** Função de paralelismo do vértice com seus vizinhos (?) 
+      ANDERSON, VEJA AQUI DEPOIS
+      */
     Map<String, Boolean> parallel = new HashMap<>();
-
 }

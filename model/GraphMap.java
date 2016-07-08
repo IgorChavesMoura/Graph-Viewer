@@ -7,6 +7,8 @@ import model.Vertex;
 import java.util.*;
 import java.io.*;
 
+// ANDERSON\IGOR, COMENTAIS ESSA CLASSE
+
 public class GraphMap implements Serializable{
 
 	/** Static Member Variables */

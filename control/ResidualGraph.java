@@ -21,30 +21,39 @@ import view.panel.PanelStatus;
 import thread.ThreadAlgorithm;
 import thread.ThreadPaint;
 
-/**
- *
- * @author anderson
+/** Classe de instância única para o grafo residual, utilizado no algortimo de fluxo máximo de Edmonds-Karp.
+ * @link https://en.wikipedia.org/wiki/Maximum_flow_problem
+ * @link https://en.wikipedia.org/wiki/Flow_network
  */
 public class ResidualGraph{
 
+	/** Método que retorna a instância única da classe. 
+	  * @return ResidualGraph - a instância única da classe
+	  */
     public static ResidualGraph getUnit(){
         if(unit == null)
             unit = new ResidualGraph();
         return unit;
     }
     
+    /**
+      */
     public boolean isRunning(){
         return isRunning;
     }
     
+    /**
+      */
     public void setRunning(boolean b){
         isRunning = b;
     }
     
+    /** Construtor padrão da classe. */
     private ResidualGraph() {
 
     }
 
+	/** Método que configura o fluxo de todas as arestas para zero. */
     public void startFlow(){
         GraphMap.getUnit().setAlgorithmRunning(true);
         for(Vertex u : set){
@@ -54,10 +63,17 @@ public class ResidualGraph{
         }
     }
     
+    /** 
+      */
     public void setInterruption(boolean b){
         interruption = b;
     }
     
+    /** Método que roda o algoritmo de fluxo máximo de Edmonds-Karp
+      * @link https://en.wikipedia.org/wiki/Edmonds%E2%80%93Karp_algorithm
+      * @param s - Vértice fonte
+      * @param t - Vértice sumidouro(destino)
+      */
     public void Edmonds_Karp(Vertex s, Vertex t) throws InterruptedException{
         startFlow();
         end = t;
@@ -101,6 +117,8 @@ public class ResidualGraph{
         Panel.getUnit().repaint();
     }
     
+    /**
+      */
     public void getMaximumFlowValue(Vertex u){
         PanelStatus sp = PanelStatus.getUnit();
         int flow = 0;
@@ -110,6 +128,7 @@ public class ResidualGraph{
         sp.setAction("Maximum Flow Value = " + flow);
     }
     
+    /** */
     public void resetVertexPainting(){
         Map<String, Integer> map = GraphMap.getUnit().getMapSelection();
         Set<String> subset = map.keySet();
@@ -120,6 +139,7 @@ public class ResidualGraph{
         }
     }
     
+    /** MANO, ANDERSON, QUE PORRA É ESSA? UAHUAHEUHAUEHAUEH*/
     public void handleThread(ObserverGraphMapPaint o, ObservableGraphMap ob, int color, Vertex u)
     throws InterruptedException{
         o.setColor(color);
@@ -131,6 +151,9 @@ public class ResidualGraph{
         }
     }            
 
+	/** Método que roda o BFS no grafo residual.
+	  * @param s - Vértice fonte
+	  */
     public void BFS(Vertex s) throws InterruptedException{
         Vertex v, u;
         int i,j;
@@ -195,12 +218,28 @@ public class ResidualGraph{
         }
         
     }
-
-    private static ResidualGraph unit;    
+	
+	/** Instância do grafo residual. */
+    private static ResidualGraph unit; 
+    
+    /** Conjunto de vértices do grafo residual(ANDERSON, COMENTA ISSO AQUI!) */   
     ArrayList<Vertex> set = Graph.getUnit().getV();
-    private boolean isAugmentedPath = true, isRunning = false;
+    
+    /** Atributo que diz se o grafo residual possui caminho aumentante entre a fonte e o sumidouro.*/
+    private boolean isAugmentedPath = true;
+    
+    /** ANDERSON, COMENTA AQUI */
+    private boolean isRunning = false;
+    
+    /** MAS QUE PORRA É ESSA? */
     private int minimumCapacity = Integer.MAX_VALUE;
+    
+    /** MAS QUE PORRA É ESSA? */
     private Vertex end;
+    
+    /** MAS QUE PORRA É ESSA? */
     private ThreadAlgorithm thread;    
+    
+    /** MAS QUE PORRA É ESSA? */
     private boolean interruption;    
 }
